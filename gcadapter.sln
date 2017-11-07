@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gcadapter_test", "gcadapter_test\gcadapter_test.csproj", "{917C7E61-5282-4123-B307-679BB66270EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GcAdapterTest", "GcAdapterTest\GcAdapterTest.csproj", "{917C7E61-5282-4123-B307-679BB66270EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gcadapter-dotnet-lib", "gcadapter-dotnet-lib\gcadapter-dotnet-lib.csproj", "{90545FEF-4669-426A-9239-C802619F9EF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GcAdapterDotNet", "GcAdapterDotNet\GcAdapterDotNet.csproj", "{90545FEF-4669-426A-9239-C802619F9EF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

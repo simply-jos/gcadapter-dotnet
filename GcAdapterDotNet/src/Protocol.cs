@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GcAdapter
+namespace GcAdapterDotNet
 {
     namespace Protocol
     {

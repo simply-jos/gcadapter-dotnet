@@ -7,7 +7,7 @@ using System.Linq;
 using LibUsbDotNet;
 using LibUsbDotNet.Main;
 
-namespace GcAdapter
+namespace GcAdapterDotNet
 {
     public class Adapter
     {
@@ -41,7 +41,7 @@ namespace GcAdapter
             Write(Protocol.Outgoing.Start);
         }
 
-        internal void ForceDisconnect(ref EventHandler<ControllerEvent> controllerUnplugged)
+        internal void ForceDisconnect(ref Action<ControllerEvent> controllerUnplugged)
         {
             foreach (var controller in this.controllers)
             {
@@ -49,7 +49,7 @@ namespace GcAdapter
             }
         }
 
-        public void Poll(ref EventHandler<ControllerEvent> controllerPluggedIn, ref EventHandler<ControllerEvent> controllerUnplugged)
+        public void Poll(ref Action<ControllerEvent> controllerPluggedIn, ref Action<ControllerEvent> controllerUnplugged)
         {
             // Read from the adapter and see what's being reported
             var readBuffer = new byte[37];
@@ -83,11 +83,11 @@ namespace GcAdapter
         private List<Adapter> adapters = new List<Adapter>();
         private DateTime nextCleanup = DateTime.UtcNow;
 
-        public event EventHandler<AdapterEvent> AdapterPluggedIn;
-        public event EventHandler<AdapterEvent> AdapterUnplugged;
+        public event Action<AdapterEvent> AdapterPluggedIn;
+        public event Action<AdapterEvent> AdapterUnplugged;
 
-        public event EventHandler<ControllerEvent> ControllerPluggedIn;
-        public event EventHandler<ControllerEvent> ControllerUnplugged;
+        public event Action<ControllerEvent> ControllerPluggedIn;
+        public event Action<ControllerEvent> ControllerUnplugged;
 
         public AdapterDaemon()
         {
@@ -138,7 +138,7 @@ namespace GcAdapter
             }
 
             // Yield the CPU
-            System.Threading.Thread.Yield();
+            System.Threading.Thread.Sleep(0);
         }
 
         private void FindNewAdapters()
@@ -156,7 +156,7 @@ namespace GcAdapter
                         var a = new Adapter(device);
                         this.adapters.Add(a);
 
-                        AdapterPluggedIn.Invoke(this, new AdapterEvent {
+                        AdapterPluggedIn(new AdapterEvent {
                             adapter = a
                         });
                     }
@@ -171,7 +171,7 @@ namespace GcAdapter
                 {
                     a.ForceDisconnect(ref ControllerUnplugged);
 
-                    AdapterUnplugged.Invoke(this, new AdapterEvent {
+                    AdapterUnplugged(new AdapterEvent {
                         adapter = a
                     });
 

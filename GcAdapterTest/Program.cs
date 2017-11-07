@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using GcAdapter;
+using GcAdapterDotNet;
 
 namespace gcadapter_test
 {
@@ -14,22 +14,22 @@ namespace gcadapter_test
         {
             var daemon = new AdapterDaemon();
 
-            daemon.AdapterPluggedIn += (s, e) =>
+            daemon.AdapterPluggedIn += (e) =>
             {
                 Console.WriteLine("Adapter plugged in (Address {0})", e.Adapter.address);
             };
 
-            daemon.AdapterUnplugged += (s, e) =>
+            daemon.AdapterUnplugged += (e) =>
             {
                 Console.WriteLine("Adapter unplugged (Address {0})", e.Adapter.address);
             };
 
-            daemon.ControllerPluggedIn += (s, e) =>
+            daemon.ControllerPluggedIn += (e) =>
             {
                 Console.WriteLine("Controller plugged in (Port {0})", e.Controller.portNumber);
             };
 
-            daemon.ControllerUnplugged += (s, e) =>
+            daemon.ControllerUnplugged += (e) =>
             {
                 Console.WriteLine("Controller unplugged (Port {0})", e.Controller.portNumber);
             };

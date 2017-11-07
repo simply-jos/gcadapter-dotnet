@@ -35,12 +35,6 @@
     <StartupObject>gcadapter_test.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gcadapter-dotnet-lib">
-      <HintPath>..\gcadapter-dotnet-lib\bin\Debug\gcadapter-dotnet-lib.dll</HintPath>
-    </Reference>
-    <Reference Include="LibUsbDotNet.LibUsbDotNet, Version=2.2.9.110, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\gcadapter-dotnet\packages\LibUsbDotNet.2.2.9-r9\lib\net45\LibUsbDotNet.LibUsbDotNet.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -59,9 +53,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\gcadapter-dotnet\gcadapter.csproj">
-      <Project>{bff7ace3-7714-4cf5-bff5-48afd92de737}</Project>
-      <Name>gcadapter</Name>
+    <ProjectReference Include="..\GcAdapterDotNet\GcAdapterDotNet.csproj">
+      <Project>{90545fef-4669-426a-9239-c802619f9ef0}</Project>
+      <Name>GcAdapterDotNet</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

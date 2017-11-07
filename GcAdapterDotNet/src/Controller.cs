@@ -1,6 +1,6 @@
 using System;
 
-namespace GcAdapter
+namespace GcAdapterDotNet
 {
     public enum Button : ushort
     {
@@ -51,17 +51,17 @@ namespace GcAdapter
             this.portNumber = portNumber;
         }
 
-        internal void ForceUnplug(ref EventHandler<ControllerEvent> controllerUnplugged)
+        internal void ForceUnplug(ref Action<ControllerEvent> controllerUnplugged)
         {
             if (this.active)
             {
                 this.active = false;
 
-                controllerUnplugged.Invoke(this, new ControllerEvent { controller = this });
+                controllerUnplugged(new ControllerEvent { controller = this });
             }
         }
 
-        public void ReadState(ref EventHandler<ControllerEvent> controllerPluggedIn, ref EventHandler<ControllerEvent> controllerUnplugged, ref byte[] data)
+        public void ReadState(ref Action<ControllerEvent> controllerPluggedIn, ref Action<ControllerEvent> controllerUnplugged, ref byte[] data)
         {
             // Each controller's data is offset into the 37 byte chunk that the
             // adapter sends back every time its polled
@@ -75,13 +75,13 @@ namespace GcAdapter
             if (controllerType != Constants.controllerNone)
             {
                 if (!this.active)
-                    controllerPluggedIn.Invoke(this, new ControllerEvent { controller = this });
+                    controllerPluggedIn(new ControllerEvent { controller = this });
 
                 this.active = true;
             } else
             {
                 if (this.active)
-                    controllerUnplugged.Invoke(this, new ControllerEvent { controller = this });
+                    controllerUnplugged(new ControllerEvent { controller = this });
 
                 this.active = false;
 

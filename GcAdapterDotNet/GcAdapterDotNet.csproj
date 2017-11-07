@@ -7,10 +7,11 @@
     <ProjectGuid>{90545FEF-4669-426A-9239-C802619F9EF0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>gcadapter_dotnet_lib</RootNamespace>
-    <AssemblyName>gcadapter-dotnet-lib</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>GcAdapterDotNet</RootNamespace>
+    <AssemblyName>GcAdapterDotNet</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LibUsbDotNet.LibUsbDotNet, Version=2.2.9.110, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LibUsbDotNet.2.2.9-r9\lib\net45\LibUsbDotNet.LibUsbDotNet.dll</HintPath>
+    <Reference Include="LibUsbDotNet, Version=2.2.8.104, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LibUsbDotNet.2.2.8\lib\LibUsbDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

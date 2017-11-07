@@ -1,4 +1,4 @@
-namespace GcAdapter {
+namespace GcAdapterDotNet {
     public static class Constants {
         public const ushort vendorId = 0x057E;
         public const ushort deviceId = 0x0337;
