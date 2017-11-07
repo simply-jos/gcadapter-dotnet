@@ -1,0 +1,13 @@
+﻿using System;
+
+namespace GcAdapter
+{
+    namespace Protocol
+    {
+        public static class Outgoing
+        {
+            public static byte[] Start = { 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+        }
+    }
+}
