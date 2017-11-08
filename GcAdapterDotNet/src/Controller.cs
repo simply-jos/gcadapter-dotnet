@@ -2,6 +2,7 @@ using System;
 
 namespace GcAdapterDotNet
 {
+    [Flags]
     public enum Button : ushort
     {
         A     = 0x0001,
