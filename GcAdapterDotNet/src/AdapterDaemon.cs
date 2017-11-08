@@ -82,7 +82,7 @@ namespace GcAdapterDotNet
 
     public class AdapterDaemon
     {
-        private const int adapterPollRate = 1000;
+        private static readonly int adapterPollRate = 2000;
 
         private Thread daemonThread;
         private bool threadRunning;
@@ -134,8 +134,7 @@ namespace GcAdapterDotNet
                 FindNewAdapters();
                 RemoveUnpluggedAdapters();
 
-                nextCleanup = DateTime.UtcNow;
-                nextCleanup.AddMilliseconds(AdapterDaemon.adapterPollRate);
+                nextCleanup = DateTime.UtcNow.AddMilliseconds(AdapterDaemon.adapterPollRate);
             }
 
             // Poll from each adapter for new controllers
