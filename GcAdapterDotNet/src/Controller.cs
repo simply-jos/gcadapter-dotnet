@@ -61,7 +61,10 @@ namespace GcAdapterDotNet
             }
         }
 
-        public void ReadState(ref Action<ControllerEvent> controllerPluggedIn, ref Action<ControllerEvent> controllerUnplugged, ref byte[] data)
+        public void ReadState(ref Action<ControllerEvent> controllerPluggedIn,
+                              ref Action<ControllerEvent> controllerUnplugged,
+                              ref Action<ControllerEvent> controllerStateUpdate,
+                              ref byte[] data)
         {
             // Each controller's data is offset into the 37 byte chunk that the
             // adapter sends back every time its polled
@@ -122,8 +125,10 @@ namespace GcAdapterDotNet
             padState.cx = ((int)data[baseAddress + 5] - 127) / 255.0f;
             padState.cy = ((int)data[baseAddress + 6] - 127) / 255.0f;
 
-            padState.l  = ((int)data[baseAddress + 7] - 127) / 255.0f;
-            padState.r  = ((int)data[baseAddress + 8] - 127) / 255.0f;
+            padState.l = ((int)data[baseAddress + 7] - 127) / 255.0f;
+            padState.r = ((int)data[baseAddress + 8] - 127) / 255.0f;
+
+            controllerStateUpdate(new ControllerEvent { controller = this });
         }
     }
 }

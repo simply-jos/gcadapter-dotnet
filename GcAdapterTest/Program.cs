@@ -34,6 +34,11 @@ namespace gcadapter_test
                 Console.WriteLine("Controller unplugged (Port {0})", e.Controller.portNumber);
             };
 
+            daemon.ControllerStateUpdate += (e) =>
+            {
+                Console.WriteLine("Controller state update: {0} {1} {2} {3} {4}", e.Controller.PadState.ax, e.Controller.PadState.ay, e.Controller.PadState.cx, e.Controller.PadState.cy, e.Controller.PadState.buttons);
+            };
+
             daemon.Start();
         }
     }
