@@ -24,19 +24,19 @@ namespace gcadapter_test
                 Console.WriteLine("Adapter unplugged (Address {0})", e.Adapter.address);
             };
 
-            daemon.ControllerPluggedIn += (e) =>
+            daemon.ControllerPluggedIn += (ev) =>
             {
-                Console.WriteLine("Controller plugged in (Port {0})", e.Controller.portNumber);
+                Console.WriteLine("Controller plugged in (Port {0})", ev.Controller.portNumber);
+
+                ev.Controller.StateUpdate += (e) =>
+                {
+                    Console.WriteLine("Controller state update: {0} {1} {2} {3} {4}", e.Controller.PadState.ax, e.Controller.PadState.ay, e.Controller.PadState.cx, e.Controller.PadState.cy, e.Controller.PadState.buttons);
+                };
             };
 
             daemon.ControllerUnplugged += (e) =>
             {
                 Console.WriteLine("Controller unplugged (Port {0})", e.Controller.portNumber);
-            };
-
-            daemon.ControllerStateUpdate += (e) =>
-            {
-                Console.WriteLine("Controller state update: {0} {1} {2} {3} {4}", e.Controller.PadState.ax, e.Controller.PadState.ay, e.Controller.PadState.cx, e.Controller.PadState.cy, e.Controller.PadState.buttons);
             };
 
             daemon.Start();

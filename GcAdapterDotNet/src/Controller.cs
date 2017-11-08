@@ -45,6 +45,8 @@ namespace GcAdapterDotNet
         private bool active;
         public bool Active { get { return active; } }
 
+        public event Action<ControllerEvent> StateUpdate;
+
         public Controller(uint portNumber)
         {
             this.active = false;
@@ -63,7 +65,6 @@ namespace GcAdapterDotNet
 
         public void ReadState(ref Action<ControllerEvent> controllerPluggedIn,
                               ref Action<ControllerEvent> controllerUnplugged,
-                              ref Action<ControllerEvent> controllerStateUpdate,
                               ref byte[] data)
         {
             // Each controller's data is offset into the 37 byte chunk that the
@@ -84,9 +85,12 @@ namespace GcAdapterDotNet
             } else
             {
                 if (this.active)
+                {
+                    StateUpdate = null;
                     controllerUnplugged(new ControllerEvent { controller = this });
 
-                this.active = false;
+                    this.active = false;
+                }
 
                 // No sense in reading the rest of the state, early-out
                 return;
@@ -128,7 +132,8 @@ namespace GcAdapterDotNet
             padState.l = ((int)data[baseAddress + 7] - 127) / 255.0f;
             padState.r = ((int)data[baseAddress + 8] - 127) / 255.0f;
 
-            controllerStateUpdate(new ControllerEvent { controller = this });
+            // Fire off the state update event
+            StateUpdate(new ControllerEvent { controller = this });
         }
     }
 }

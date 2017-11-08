@@ -49,7 +49,7 @@ namespace GcAdapterDotNet
             }
         }
 
-        public void Poll(ref Action<ControllerEvent> controllerPluggedIn, ref Action<ControllerEvent> controllerUnplugged, ref Action<ControllerEvent> controllerStateUpdate)
+        public void Poll(ref Action<ControllerEvent> controllerPluggedIn, ref Action<ControllerEvent> controllerUnplugged)
         {
             // Read from the adapter and see what's being reported
             var readBuffer = new byte[37];
@@ -61,7 +61,7 @@ namespace GcAdapterDotNet
             for (uint i=0;i<4;++i)
             {
                 var controller = this.controllers[i];
-                controller.ReadState(ref controllerPluggedIn, ref controllerUnplugged, ref controllerStateUpdate, ref readBuffer);
+                controller.ReadState(ref controllerPluggedIn, ref controllerUnplugged, ref readBuffer);
             }
         }
 
@@ -88,7 +88,6 @@ namespace GcAdapterDotNet
 
         public event Action<ControllerEvent> ControllerPluggedIn;
         public event Action<ControllerEvent> ControllerUnplugged;
-        public event Action<ControllerEvent> ControllerStateUpdate;
 
         public AdapterDaemon()
         {
@@ -135,7 +134,7 @@ namespace GcAdapterDotNet
             // Poll from each adapter for new controllers
             foreach (var adapter in adapters)
             {
-                adapter.Poll(ref ControllerPluggedIn, ref ControllerUnplugged, ref ControllerStateUpdate);
+                adapter.Poll(ref ControllerPluggedIn, ref ControllerUnplugged);
             }
 
             // Yield the CPU
