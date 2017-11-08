@@ -19,6 +19,8 @@ namespace GcAdapterDotNet
 
         public Controller[] controllers = new Controller[4];
 
+        private Byte[] writeBuffer = new Byte[5] { Protocol.Outgoing.Poll, 0x00, 0x00, 0x00, 0x00 };
+
         public Adapter(UsbDevice adapterDevice)
         {
             this.adapterDevice = adapterDevice;
@@ -43,7 +45,7 @@ namespace GcAdapterDotNet
 
         internal void ForceDisconnect(ref Action<ControllerEvent> controllerUnplugged)
         {
-            foreach (var controller in this.controllers)
+            foreach (var controller in controllers)
             {
                 controller.ForceUnplug(ref controllerUnplugged);
             }
@@ -53,16 +55,21 @@ namespace GcAdapterDotNet
         {
             // Read from the adapter and see what's being reported
             var readBuffer = new byte[37];
-            int readLength;
 
+            int readLength;
             reader.Read(readBuffer, 10, out readLength);
 
             // Read each port for any state changes
             for (uint i=0;i<4;++i)
             {
-                var controller = this.controllers[i];
+                var controller = controllers[i];
                 controller.ReadState(ref controllerPluggedIn, ref controllerUnplugged, ref readBuffer);
             }
+
+            // Write the command message back to the controller
+            // TODO: Write out vibration bits in command message
+            int writeLength;
+            writer.Write(writeBuffer, 5, out writeLength);
         }
 
         public void Write(byte[] data)
