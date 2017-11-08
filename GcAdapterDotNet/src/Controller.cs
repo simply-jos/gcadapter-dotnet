@@ -32,7 +32,7 @@ namespace GcAdapterDotNet
         public float l;
         public float r;
 
-        public ushort buttons;
+        public Button buttons;
     }
 
     public class Controller
@@ -100,22 +100,22 @@ namespace GcAdapterDotNet
 
             // Read out the state from the slice of data
             // Two sets of button bytes, one at base + 1 and one at base + 2
-            ushort b = (ushort)(data[1 + portNumber * 9 + 1] | (data[1 + portNumber * 9 + 2] << 8));
+            Button b = (Button)(data[1 + portNumber * 9 + 1] | (data[1 + portNumber * 9 + 2] << 8));
 
-            padState.buttons |= (ushort)(b & (ushort)Button.A);
-            padState.buttons |= (ushort)(b & (ushort)Button.B);
-            padState.buttons |= (ushort)(b & (ushort)Button.X);
-            padState.buttons |= (ushort)(b & (ushort)Button.Y);
+            padState.buttons |= b & Button.A;
+            padState.buttons |= b & Button.B;
+            padState.buttons |= b & Button.X;
+            padState.buttons |= b & Button.Y;
 
-            padState.buttons |= (ushort)(b & (ushort)Button.Left);
-            padState.buttons |= (ushort)(b & (ushort)Button.Right);
-            padState.buttons |= (ushort)(b & (ushort)Button.Up);
-            padState.buttons |= (ushort)(b & (ushort)Button.Down);
+            padState.buttons |= b & Button.Left;
+            padState.buttons |= b & Button.Right;
+            padState.buttons |= b & Button.Up;
+            padState.buttons |= b & Button.Down;
 
-            padState.buttons |= (ushort)(b & (ushort)Button.S);
-            padState.buttons |= (ushort)(b & (ushort)Button.Z);
-            padState.buttons |= (ushort)(b & (ushort)Button.L);
-            padState.buttons |= (ushort)(b & (ushort)Button.R);
+            padState.buttons |= b & Button.S;
+            padState.buttons |= b & Button.Z;
+            padState.buttons |= b & Button.L;
+            padState.buttons |= b & Button.R;
 
             // The axises are stored sequentially starting at the base address + 3 bytes, one byte each,
             // in the following order:
@@ -129,8 +129,8 @@ namespace GcAdapterDotNet
             padState.cx = ((int)data[baseAddress + 5] - 127) / 255.0f;
             padState.cy = ((int)data[baseAddress + 6] - 127) / 255.0f;
 
-            padState.l = ((int)data[baseAddress + 7] - 127) / 255.0f;
-            padState.r = ((int)data[baseAddress + 8] - 127) / 255.0f;
+            padState.l = ((int)data[baseAddress  + 7] - 127) / 255.0f;
+            padState.r = ((int)data[baseAddress  + 8] - 127) / 255.0f;
 
             // Fire off the state update event
             StateUpdate(new ControllerEvent { controller = this });
